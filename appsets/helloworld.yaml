@@ -4,6 +4,9 @@ metadata:
   name: example-appset
   namespace: argocd
 spec:
+  ignoreApplicationDifferences:
+    - jsonPointers:
+        - /spec/syncPolicy
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
@@ -29,9 +32,3 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
-          - RespectIgnoreDifferences=true
-      ignoreDifferences:
-        - group: argoproj.io
-          kind: Application
-          jsonPointers:
-            - /spec/syncPolicy
