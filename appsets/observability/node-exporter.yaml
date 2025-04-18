@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: node-exporter
+spec:
+  ignoreApplicationDifferences:
+    - jsonPointers:
+        - /spec/syncPolicy
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - clusters: {}
+  template:
+    metadata:
+      name: 'node-exporter-{{.name}}'
+    spec:
+      project: default
+      sources:
+      - repoURL: https://prometheus-community.github.io/helm-charts
+        chart: prometheus-node-exporter
+        targetRevision: 4.45.2
+        helm:
+          valueFiles:
+            - $valuesRef/observability/node-exporter/values.yaml
+      - repoURL: https://github.com/fastworkco/kustomize-conf.git'
+        targetRevision: main
+        ref: valuesRef
+      destination:
+        server: '{{.server}}'
+        namespace: observability
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
+
