@@ -22,7 +22,7 @@ spec:
         helm:
           valueFiles:
             - $valuesRef/observability/node-exporter/values.yaml
-      - repoURL: https://github.com/fastworkco/kustomize-conf.git'
+      - repoURL: https://github.com/phanupongr/gitops-demo.git
         targetRevision: main
         ref: valuesRef
       destination:
