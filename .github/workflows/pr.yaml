@@ -17,4 +17,4 @@ jobs:
     - run: kubeconform
     # - name: Install Kustomize
       # run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
-    - run: cd hello-world && kustomize build overlays/staging
+    - run: cd hello-world && kustomize build overlays/staging | kubeconform -verbose
