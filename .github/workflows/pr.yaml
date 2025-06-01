@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: yokawasa/action-setup-kube-tools@v0.11.
+    - uses: yokawasa/action-setup-kube-tools@v0.11.2
       with:
         kubeconform: '0.7.0'
 
