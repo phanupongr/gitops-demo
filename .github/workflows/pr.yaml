@@ -1,0 +1,20 @@
+name: On Pull Request
+
+on:
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  kustomize:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: yokawasa/action-setup-kube-tools@v0.11.2
+      with:
+        kubeconform: '0.7.0'
+
+    - run: kubeconform
+    # - name: Install Kustomize
+      # run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+    - run: cd hello-world && kustomize build overlays/staging | kubeconform -verbose
